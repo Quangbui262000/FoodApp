@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:background="#f8f8ff">
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/hinhanh"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txttensp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="Pizza Big"
+            android:textColor="#ff0000"
+            android:textSize="23sp" />
+
+        <TextView
+
+            android:id="@+id/txtgiatien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="255.555 Đ"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_selector"
+                android:src="@drawable/baseline_arpart_88" />
+
+            <TextView
+                android:id="@+id/txtsoluong"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="1"
+                android:textColor="#008000"
+                android:textSize="18sp" />
+            <ImageButton
+                android:layout_marginTop="3dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_selector"
+                android:src="@drawable/baseline_add_88" />
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+
+            android:id="@+id/txtbaohanh"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="1"
+            android:textColor="#008000"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_gravity="end"
+            android:id="@+id/imgxoa"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/baseline_delete_88" />
+
+    </LinearLayout>
+
+</LinearLayout>
