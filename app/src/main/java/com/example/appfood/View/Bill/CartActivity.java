@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appfood.View.HomeActivity;
+import com.example.appfood.ZaloPay.Api.CreateOrder;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.appfood.Adapter.GioHangAdapter;
 import com.example.appfood.Model.SanPhamModels;
@@ -47,13 +49,18 @@ import java.util.Map;
 
 import vn.momo.momo_partner.AppMoMoLib;
 import vn.momo.momo_partner.MoMoParameterNameMap;
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
+
 public class CartActivity extends AppCompatActivity implements GioHangView {
     private RecyclerView rcVBill;
     private GioHangAdapter sanPhamAdapter;
     private GioHangPreSenter gioHangPreSenter;
     private ArrayList<SanPhamModels> arrayList;
     private Button btnthanhtoan;
-    private  String s[]={"Thanh toán khi nhận hàng","Thanh toán MOMO"};
+    private  String s[]={"Thanh toán khi nhận hàng","Thanh toán MOMO","Thanh toán Zalo"};
     private  long tongtien = 0;
     private ProgressBar progressBar;
     private  String hoten="",diachi="",sdt="";
@@ -70,6 +77,11 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         setContentView(R.layout.fragment_cart);
         InitWidget();
         Init();
+        //zalo
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        // ZaloPay SDK Init
+        ZaloPaySDK.init(2553, Environment.SANDBOX);
     }
 
     private void Init() {
@@ -189,6 +201,9 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     requestPayment();
                                     dialog.cancel();
                                     break;
+                                case 2:
+                                    requestZalo();
+                                    dialog.cancel();
 
                             }
                             progressBar.setVisibility(View.VISIBLE);
@@ -261,6 +276,40 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
 
         }
         progressBar.setVisibility(View.GONE);
+
+    }
+    //Thanh toán zalo
+    private void requestZalo(){
+
+        CreateOrder orderApi = new CreateOrder();
+        try {
+            JSONObject data = orderApi.createOrder(String.valueOf(tongtien));
+            String code = data.getString("return_code");
+            if (code.equals("1")) {
+                String token = data.getString("zp_trans_token");
+                ZaloPaySDK.getInstance().payOrder(CartActivity.this, token, "demozpdk://app", new PayOrderListener() {
+                    @Override
+                    public void onPaymentSucceeded(String s, String s1, String s2) {
+
+                    }
+
+                    @Override
+                    public void onPaymentCanceled(String s, String s1) {
+                    }
+
+                    @Override
+                    public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
+                    }
+                });
+                Calendar calendar=Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                gioHangPreSenter.HandleAddHoaDon(simpleDateFormat.format(calendar.getTime()),diachi,hoten,sdt,spinner.getSelectedItem().toString(),tongtien,arrayList);
+                progressBar.setVisibility(View.GONE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

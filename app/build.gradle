@@ -40,7 +40,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.2.0'//add đăng ký email
     implementation 'com.google.firebase:firebase-firestore:24.9.1'//lưu dữ liệu firebasestore
     implementation 'com.google.firebase:firebase-firestore:24.9.1'// lưu dữ liệu firebasestore
-    implementation 'com.google.firebase:firebase-storage:20.3.0'// gg map
+    implementation 'com.google.firebase:firebase-storage:20.3.0'
+    implementation fileTree(dir: 'C:\\Users\\ASUS TUF\\Music\\Zalo', include: ['*.aar', '*.jar'], exclude: [])
+// gg map
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -49,4 +51,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // biểu đồ
     implementation 'de.hdodenhof:circleimageview:3.1.0' // thong tin ca nhan
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //ZaloPay
+    implementation("com.squareup.okhttp3:okhttp:4.6.0")
+    implementation("commons-codec:commons-codec:1.14")
 }
